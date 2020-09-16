@@ -1,0 +1,48 @@
+Spring:
+  profiles:
+    active:
+    - local
+
+---
+
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:330/mydb?serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  session:
+    jdbc:
+      initialize-schema: always
+  mvc:
+    view:
+      prefix: "/WEB-INF/views"
+      suffix: ".jsp"
+    static-path-pattern: "/static/**"
+  profiles:
+  - local
+server:
+  port: 8080
+  tomcat:
+    file-encoding: UTF-8
+  
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+      
+    jsp:
+      init-parameters:
+        development: true
+    session:
+      timeout: 7200
+  error:
+    whitelabel:
+      enabled: false
+mybatis:
+  type-aliases-package: com.SpringStarter.example.domain
+  mapper-locations: mapper/**/*.xml
+logging:
+      config: classpath:logback-spring.xml

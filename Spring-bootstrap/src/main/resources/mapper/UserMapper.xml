@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.SpringStarter.example.mapper.UserMapper">
+
+	<select id="readUser" parameterType="String" resultType="User">
+	select *
+	from user
+	where username= #{username}
+
+	</select>
+
+
+
+	<select id="readAuthorities" parameterType="String" resultType="org.springframework.security.core.authority.SimpleGrantedAuthority">
+	select *
+	from auth
+	where 1=1
+	and userid = #{userid}
+	</select>
+	
+	
+	
+	
+	
+	<insert id="createUser" parameterType="User">
+		insert into user(
+		username,
+		password,
+		uname,
+		isCredentialsNonExpired,
+		isAccountNonExpired,
+		isAccountNonLocked,
+		isEnabled
+		) values(
+		#{username},
+		#{password},
+		#{uname},
+		#{isCredentialsNonExpired},
+		#{isAccountNonExpired},
+		#{isAccountNonLocked},
+		#{isEnabled}
+		)
+	</insert>
+	
+	
+	<insert id="createAuthority" parameterType="org.springframework.security.core.GrantedAuthority">
+	insert into auth(
+		userid,
+		Rolename
+	 ) values
+	 <foreach item="authority" index="index" collection="authorities" separator=",">
+	 	(#{username},#{authority.role})
+	 </foreach>
+	 ON DUPLICATE KEY
+	 UPDATE
+	 	userid = #{username};
+	 	
+	</insert>
+	
+	
+</mapper>
