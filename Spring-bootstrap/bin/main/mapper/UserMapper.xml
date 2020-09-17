@@ -3,7 +3,7 @@
 <mapper namespace="com.SpringStarter.example.mapper.UserMapper">
 
 	<select id="readUser" parameterType="String" resultType="User">
-	select *
+	select usernumber, username, password, uname,isAccountNonExpired,isAccountNonLocked, isCredentialsNonExpired,isEnabled
 	from user
 	where username= #{username}
 
@@ -12,10 +12,10 @@
 
 
 	<select id="readAuthorities" parameterType="String" resultType="org.springframework.security.core.authority.SimpleGrantedAuthority">
-	select *
+	select Rolename
 	from auth
 	where 1=1
-	and userid = #{userid}
+	and userid = #{username}
 	</select>
 	
 	

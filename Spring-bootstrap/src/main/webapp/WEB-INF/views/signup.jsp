@@ -40,3 +40,30 @@
 	
 	</div>
 </body>
+<script>
+$('#Check_overlap').on('click',function(){
+ 	alert();
+	$('#check_info').remove();
+	var username =$('#id').val();
+	$.ajax('Check_overlap',{
+		type:'get',
+		dataType:"json",
+		data:{
+			 username : username
+			},
+		success:function(msg){
+			console.log(msg);
+			if(!msg.overlap){
+				$('#check').append('<div class="alert alert-success" id="check_info" role="alert">가능합니다</div>');
+			}else{
+				$('#check').append('<div class="alert alert-danger"id="check_info" role="alert">다른아이디를 사용하여 주세요</div>');
+			}
+			
+		},
+		error:function(request,status,error){
+		}
+			
+
+		});
+	 })
+</script>

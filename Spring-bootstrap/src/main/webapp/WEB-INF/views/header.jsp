@@ -22,8 +22,11 @@
 					<li><a href="#" id="show_Register">회원가입</a></li>
 					</sec:authorize>
 					<sec:authorize access="isAuthenticated()">
-					<li><a href="#" id="show_logout">로그아웃</a></li>
+					<li><a href="/logout">로그아웃</a></li>
 					<li><a href="#" id="show_Register">내정보보기</a></li>
+					</sec:authorize>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<li><a href="#" id="show_admin">관리자 도구</a></li>
 					</sec:authorize>
 					
 				</ul>
@@ -40,13 +43,13 @@
 					<h4 class="modal-title" id="loginform">Login</h4>
 					</div>
 				<div class="modal-body">
-					<form action="/loginpro" method="post">
+					<form action="/loginPro" method="post">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 							<div class="form-group">
 								<label for="id" class="control-label">id</label>
 								<input type="text" class="form-control" id="username" name="username" required>
 								<label for="password" class="control-label">password</label>
-								<input type="password" class="form-control" id="password" name="userpassword" required>
+								<input type="password" class="form-control" id="password" name="password" required>
 								<div class="checkbox">
 									<label>
 										<input type="checkbox" value="remember-me">Remember
@@ -59,3 +62,15 @@
 				</div>
 			</div>
 		</div>
+		
+<script>
+$('#show_login').on('click',function(){
+	$('#loginModal').modal('show');
+});
+$(document).on('click', '#show_admin', function () {
+	window.open("admin","Register","width=800,height=700 location=yes");
+});
+
+
+
+</script>
