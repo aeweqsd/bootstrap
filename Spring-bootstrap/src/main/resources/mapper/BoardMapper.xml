@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.SpringStarter.example.mapper.BoardMapper">
+<select id="readBoard" parameterType="String" resultType="Board">
+	select *
+	from board
+	where boardsubject =#{subjectname}
+</select>
+<insert id="createBoard" parameterType="Board">
+	insert into board(
+	boardname,
+	boardsubject,
+	boardcontent,
+	boardwriter,
+	hit,
+	likenum
+	)
+	values(
+	#{boardname},
+	#{boardsubject},
+	#{boardcontent},
+	#{boardwriter},
+	#{hit},
+	#{likenum}
+	)
+</insert>
+<delete id="deleteBoard" parameterType="String">
+	delete from board
+	where boardname=#{boardname};
+</delete>
+
+
+<select id="readoneBoard" parameterType="int" resultType="Board">
+	select *
+	from board
+	where Idboard = #{Idboard};
+</select>
+<update id ="updatelikenum" parameterType="int">
+	update board
+	set likenum = likenum+1
+	where Idboard = #{Idboard};
+</update>
+</mapper>

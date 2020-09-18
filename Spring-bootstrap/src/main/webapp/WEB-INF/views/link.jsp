@@ -14,6 +14,7 @@
 <title>SPA EXAMPLE</title>
 </head>
 <Style>
+
 [class*="col-"] {
   padding-top: 15px;
   padding-bottom: 15px;
@@ -22,8 +23,20 @@
      border: 1px solid #ddd; 
    border: 1px solid rgba(86,61,124,.2); 
 }
+
 body {
   padding-top: 70px;
   padding-bottom: 30px;
+}
+.pagination{
+	display: block;
+	text-align :center;
+}
+.pagination >li>a{
+	float:none;
+	margin-left:-5px;
+}
+#qqqqq{
+	border : 1px solid gray;
 }
 </Style>

@@ -58,7 +58,7 @@
 </body>
 </html>
 <script>
-/*
+
 $(document).ready(function(){
 $.ajax('/read_subject',{
 	type:'get',
@@ -71,5 +71,5 @@ $.ajax('/read_subject',{
 
 	});
 })
-*/
+
 </script>

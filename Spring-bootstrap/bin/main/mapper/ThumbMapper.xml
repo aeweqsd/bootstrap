@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.SpringStarter.example.mapper.ThumbMapper">
+	<insert id="createthumb" parameterType="Thumbs_up">
+		insert into thumbs_up(
+		idboard,
+		usernumber
+		) values(
+		#{idboard},
+		#{usernumber}
+		)
+	</insert>
+	<select id="isthumb" parameterType="Thumbs_up" resultType="boolean">
+		select count(*)
+		from thumbs_up
+		where idboard = #{idboard}
+		and   usernumber =#{usernumber};
+	</select>
+	<delete id="deletethumb" parameterType="Thumbs_up">
+		delete 
+		from thumbs_up
+		where idboard= #{idboard}
+		and usernumber =#{usernumber}; 
+	
+	</delete>
+</mapper>

@@ -33,7 +33,9 @@
 					<h4 class="modal-title">게시판 관리</h4>
 					</div>
 				<div class="modal-body">
-				<div id="subjectlist"></div>
+				<div id="subjectlist">
+					
+				</div>
 				<input type="text" class="form-control"id=val>
 				<button type="button"id="read_subject"class="btn btn-primary">게시판 검색</button>
 				<button type="button"id="create_subject"class="btn btn-default">게시판 생성</button>
@@ -48,7 +50,17 @@
 <script >
 
 $(document).ready(function(){
-	
+	$.ajax('/read_subject',{
+		type:'get',
+		dataType: 'html',
+		success:function(html){
+			console.log(html);
+			$('#subjectlist').append(html);
+			},
+		error:function(request,status,error){
+			}
+
+		});
 });
 $('#user_manage').on('click',function(){
 	console.log($('#user_manage'));
@@ -56,17 +68,8 @@ $('#user_manage').on('click',function(){
 });
 $('#subject_manage').on('click',function(){
 	$('#subject_manager').modal('show');
-/*	$.ajax('/read_subject',{
-		type:'get',
-		dataType: 'html',
-		success:function(html){
-			$('#subjectlist').append(html);
-			},
-		error:function(request,status,error){
-			}
-
-		});
-	*/
+	
+	
 });
 $('#create_subject').on('click',function(){
 	var name= $('#val').val();

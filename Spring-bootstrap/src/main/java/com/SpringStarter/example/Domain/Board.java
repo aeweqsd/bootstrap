@@ -5,6 +5,20 @@ public class Board {
 	private String boardname;
 	private String boardsubject;
 	private String boardcontent;
+	private String boardwriter;
+	private boolean isthumb;
+	public boolean isIsthumb() {
+		return isthumb;
+	}
+	public void setIsthumb(boolean isthumb) {
+		this.isthumb = isthumb;
+	}
+	public String getBoardwriter() {
+		return boardwriter;
+	}
+	public void setBoardwriter(String boardwriter) {
+		this.boardwriter = boardwriter;
+	}
 	private int hit;
 	private int likenum;
 	private String Datetime;
