@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.SpringStarter.example.Domain.Board;
 import com.SpringStarter.example.Domain.Thumbs_up;
 import com.SpringStarter.example.mapper.BoardMapper;
+import com.SpringStarter.example.mapper.SubjectMapper;
 import com.SpringStarter.example.mapper.ThumbMapper;
 
 
@@ -15,19 +16,23 @@ import com.SpringStarter.example.mapper.ThumbMapper;
 public class BoardServiceImpl implements BoardService{
 	@Autowired BoardMapper boardmapper;
 	@Autowired ThumbMapper thumbmapper;
+	@Autowired SubjectMapper subjectmapper;
 	@Override
 	public List<Board> readBoard(String subjectname) {
-		
+		subjectmapper.updatesubjectmembercount(subjectname);
 		return boardmapper.readBoard(subjectname);
 	}
 	@Override
 	public void createBoard(Board board) {
+		String subject = board.getBoardsubject();
+		subjectmapper.updatesubjectboardcount(subject);
 		boardmapper.createBoard(board);
 		
 	}
 	@Override
-	public void deleteBoard(String boardname) {
-		boardmapper.deleteBoard(boardname);
+	public void deleteBoard(int idboard) {
+		thumbmapper.deleteboard(idboard);
+		boardmapper.deleteBoard(idboard);
 	}
 	@Override
 	public Board readoneBoard(int idboard) {
@@ -44,8 +49,13 @@ public class BoardServiceImpl implements BoardService{
 	}
 	@Override
 	public void deletethumb(Thumbs_up thumbs_up) {
+		boardmapper.deletelikenum(thumbs_up.getIdboard());
 		thumbmapper.deletethumb(thumbs_up);
 		
+	}
+	@Override
+	public int maxpage(String subjectname) {
+		return boardmapper.maxpage(subjectname);
 	}
 
 }

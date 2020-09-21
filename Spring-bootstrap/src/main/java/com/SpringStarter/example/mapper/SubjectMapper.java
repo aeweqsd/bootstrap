@@ -9,4 +9,6 @@ public interface SubjectMapper {
 	public List<Subject> readSubject(int num);
 	public void createSubject(Subject subject);
 	public void deleteSubject(Subject subject);
+	public void updatesubjectboardcount(String subjectname);
+	public void updatesubjectmembercount(String subjectname);
 }

@@ -13,11 +13,14 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.SpringStarter.example.Domain.*;
 import com.SpringStarter.example.service.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -86,15 +89,20 @@ public class Controller {
 	@RequestMapping("/selectsubjectshow")
 	public String readsubjectboard(Subject subject, Model model) {
 		String subjectname = subject.getSubjectname();
+		int maxpage = boardservice.maxpage(subjectname);
+		subject.setMaxpage(maxpage);
+		if(subject.getCurrentpage() == 0) {
+			subject.setCurrentpage(0);
+		}
 		List<Board> list = boardservice.readBoard(subjectname);
 		model.addAttribute("list",list);
 		model.addAttribute("subjectname",subjectname);
 		return "/boardshow";
 	}
 	@RequestMapping("/boardcreating")
-	public String createboard(Board board) {
-		board.setHit(0);
-		board.setLikenum(0);
+	public String createboard(@RequestParam("Data") String data) throws JsonMappingException, JsonProcessingException {
+		Board board = new Board();
+		board = objectmapper.readValue(data,Board.class);
 		boardservice.createBoard(board);
 		return "/Success";
 	}
@@ -114,10 +122,22 @@ public class Controller {
 		boardservice.createthumb(thumb);
 		return "/Success";
 	}
-	@RequestMapping("/likedelete")
+	@RequestMapping(value="/likedelete", method = RequestMethod.DELETE)
 	public String deletelike(Thumbs_up thumb) {
 		boardservice.deletethumb(thumb);
 		return "/Success";
+	}
+	@RequestMapping("/deleteboard")
+	public String deleteboard(Board board) {
+		boardservice.deleteBoard(board.getIdboard());
+		return "/Success";
+	}
+	@RequestMapping("/boardmodified")
+	@ResponseBody
+	public String boardmodified(Board board) throws JsonProcessingException {
+		board =boardservice.readoneBoard(board.getIdboard());
+		String a = objectmapper.writeValueAsString(board);
+		return a;
 	}
 	
 	

@@ -21,8 +21,8 @@
 
 				<span class="glyphicon glyphicon-thumbs-up"></span>  ${list.likenum}
 				<c:if test="${username eq list.boardwriter}">
-				<button type="button" class="btn btn-xs btn-danger">글삭제</button>
-				<button type="button" class="btn btn-xs btn-warning">글수정</button>
+				<button type="button" id ="boarddelete" value ="${list.idboard}"class="btn btn-xs btn-danger">글삭제</button>
+				<button type="button" id ="boardmodified" value ="${list.idboard}"class="btn btn-xs btn-warning">글수정</button>
 				</c:if>
 				</div>
 			</c:forEach>
@@ -142,10 +142,17 @@ $('#makingboardmodal').on('show.bs.modal', function (event) {
 	  var modal = $(this)
 	  modal.find('.modal-title').text("글 작성 :" +recipient)
 	  modal.find('.modal-body #subjectname').val(recipient)
+	  modal.find('.modal-body #boardname').val('')
+	  modal.find('.modal-body #content').val('')
+	  modal.find('.modal-footer #boardcreatepro').removeAttr('value').empty().append('글작성')
 	})
 $(document).on('click','#showoneboard1',function(){
 	var idboard = $(this).attr('value');
 	var modal =$('#showoneboard');
+	modal.find('.modal-body #boardname').empty()
+	modal.find('.modal-body #boardwriter').empty()
+	modal.find('.modal-body #hit').empty()
+	modal.find('.modal-body #boardcontent').empty()
 	
 	$.ajax('/selectboard',{
 		type:'get',
@@ -187,9 +194,11 @@ $(document).on('click','#showoneboard1',function(){
 	
 })	
 $(document).on('click','#boardcreatepro',function(){
+	var obj = new Object();
 	var subject = $('#subjectname').val();
 	var name = $('#boardname').val();
 	var content = $('#content').val();
+	var idboard =$(this).attr('value');
 	if(!name){
 		alert("제목을 작성하세요");
 		return;
@@ -198,14 +207,22 @@ $(document).on('click','#boardcreatepro',function(){
 		alert("내용을 작성하세요");
 		return;
 	}
+	obj.boardsubject = subject;
+	obj.boardname = name;
+	obj.boardcontent = content;
+	obj.boardwriter = user;
+	if(idboard !=null){
+		obj.idboard = idboard
+	}else{
+		obj.idboard =0;
+	}
+	var Data = JSON.stringify(obj);
+	console.log(obj)
 	$.ajax('/boardcreating',{
 		type:'post',
 		dataType: 'html',
 		data:{
-				boardname : name,
-				boardsubject : subject,
-				boardcontent :content,
-				boardwriter : user
+				Data : Data
 			},
 		success:function(html){
 			$('#makingboardmodal').modal('hide');
@@ -215,10 +232,10 @@ $(document).on('click','#boardcreatepro',function(){
 
 		});
 
-	
 })
 $(document).on('click','#thumbs-up',function(){
 	var Idboard = $(this).attr('value');
+	var button =$(this)
 	$.ajax('/likecreating',{
 		type:'get',
 		dataType: 'html',
@@ -228,6 +245,8 @@ $(document).on('click','#thumbs-up',function(){
 			},
 		success:function(html){
 			$('#status').append('<div class="alert alert-success alert-dismissible"role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>좋아요가 완료되었습니다</div>');
+			button.attr('disabled','disabled')
+			$('#thumbs-down').removeAttr('disabled')
 			},
 		error:function(request,status,error){
 			}
@@ -244,13 +263,56 @@ $(document).on('click','#thumbs-down',function(){
 				idboard : Idboard
 			},
 		success:function(html){
-			alert("좋아요가 취소되었습니다")	
+			alert("좋아요가 취소되었습니다")
+			$('#thumbs-up').removeAttr('disabled')
+			$(this).attr('disabled','')
 		},
 		error:function(request,status,error){
 			}
 
 		});	
 })
+$(document).on('click','#boarddelete',function(){
+	var idboard = $(this).attr('value');
+	$.ajax('/deleteboard',{
+		type:'delete',
+		dataType:'html',
+		data:{
+			idboard : idboard
+		},
+		success:function(html){
+			alert("글이 삭제 되었습니다.");
+		},
+		error:function(request,status,error){}
 
+		});
+})
+$(document).on('click','#boardmodified',function(){
+	var idboard =$(this).attr('value');
+	$.ajax('/boardmodified',{
+		type: 'put',
+		dataType:'json',
+		data:{
+			idboard:idboard
+		},
+		success:function(json){
+			var modal = $('#makingboardmodal');
+			modal.modal('show');
+			modal.find('.modal-title').text("글 수정")
+			modal.find('.modal-body #subjectname').val(json.boardsubject)
+			modal.find('.modal-body #boardname').val(json.boardname)
+			modal.find('.modal-body #content').val(json.boardcontent)
+			var button =modal.find('.modal-footer #boardcreatepro').empty()
+			button.append('글 수정')
+			button.attr('value',json.idboard)
+			console.log(json);
+		},
+		error:function(request,status,error){
+		}
+		
+	});
+
+	
+})
 </script>
 	

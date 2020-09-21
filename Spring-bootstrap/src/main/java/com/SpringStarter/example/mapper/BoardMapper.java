@@ -8,8 +8,10 @@ import org.apache.ibatis.annotations.Mapper;
 public interface BoardMapper {
 	public List<Board> readBoard(String subjectname);
 	public void createBoard(Board board);
-	public void deleteBoard(String boardname);
+	public void deleteBoard(int Idboard);
 	public void updateBoard(Board board);
 	public void updatelikenum(int Idboard);
 	public Board readoneBoard(int Idboard);
+	public void deletelikenum(int Idboard);
+	public int maxpage(String subjectname);
 }

@@ -8,6 +8,7 @@
 </select>
 <insert id="createBoard" parameterType="Board">
 	insert into board(
+	idboard,
 	boardname,
 	boardsubject,
 	boardcontent,
@@ -16,6 +17,7 @@
 	likenum
 	)
 	values(
+	#{idboard},
 	#{boardname},
 	#{boardsubject},
 	#{boardcontent},
@@ -23,10 +25,17 @@
 	#{hit},
 	#{likenum}
 	)
+	ON DUPLICATE KEY UPDATE
+	idboard =#{idboard},
+	boardname =#{boardname},
+	boardcontent =#{boardcontent};
+
+	
+		
 </insert>
-<delete id="deleteBoard" parameterType="String">
+<delete id="deleteBoard" parameterType="int">
 	delete from board
-	where boardname=#{boardname};
+	where idboard = #{idboard};
 </delete>
 
 
@@ -40,4 +49,19 @@
 	set likenum = likenum+1
 	where Idboard = #{Idboard};
 </update>
+<update id ="deletelikenum" parameterType="int">
+	update board
+	set likenum = likenum-1
+	where Idboard =#{Idboard};
+
+</update>
+<select id="maxpage" parameterType="String" resultType="int">
+select MAX(currentpage) as maxpage
+from(
+select b.*,FLOOR(@rownum:=@rownum+1/10)+1 as currentpage
+from board b
+where (@rownum:=0)=0 and b.boardsubject = #{subjectname}
+order by datetime desc
+)as a
+</select>
 </mapper>

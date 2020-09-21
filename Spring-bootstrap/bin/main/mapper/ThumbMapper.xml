@@ -21,6 +21,11 @@
 		from thumbs_up
 		where idboard= #{idboard}
 		and usernumber =#{usernumber}; 
+	</delete>
+	<delete id="deleteboard" parameterType="int">
+		delete
+		from thumbs_up
+		where idboard =#{idboard};
 	
 	</delete>
 </mapper>

@@ -12,8 +12,8 @@
 	<tr>
 		
 		<td><a href="/selectsubjectshow?subjectname=${list.subjectname}">${list.subjectname}</a></td>
-		<td>${list.idsubject}</td>
-		<td></td>
+		<td>${list.subjectboardcount}</td>
+		<td>${list.subjectmembercount}</td>
 	
 	</tr>
 	</c:forEach>

@@ -19,6 +19,8 @@ public class SubjectServiceImpl implements SubjectService{
 
 	@Override
 	public void createSubject(Subject subject) {
+		subject.setSubjectboardcount(0);
+		subject.setSubjectmembercount(0);
 		subjectmapper.createSubject(subject);
 	}
 

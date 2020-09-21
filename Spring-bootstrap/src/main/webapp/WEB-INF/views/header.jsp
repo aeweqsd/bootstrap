@@ -16,7 +16,7 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
+					<li class="active"><a href="/">Home</a></li>
 					<sec:authorize access="isAnonymous()">
 					<li><a href="#" id="show_login">로그인</a></li>
 					<li><a href="#" id="show_Register">회원가입</a></li>

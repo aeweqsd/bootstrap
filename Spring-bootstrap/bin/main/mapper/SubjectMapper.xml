@@ -14,4 +14,15 @@
 
 </insert>
 <delete id="deleteSubject" parameterType="Subject"></delete>
+
+<update id="updatesubjectboardcount" parameterType="String">
+	update subject
+	set subjectboardcount = subjectboardcount +1
+	where subjectname = '${subjectname}'
+</update>
+<update id="updatesubjectmembercount" parameterType="String">
+	update subject
+	set subjectmembercount = subjectmembercount+1
+	where subjectname = '${subjectname}'
+</update>
 </mapper>
