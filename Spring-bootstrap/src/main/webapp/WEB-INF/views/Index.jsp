@@ -38,16 +38,16 @@
 			<h4>게시판 목록</h4>
 				<div class="btn-group" data-toggle="buttons">
 				  <label class="btn btn-primary active">
-				    <input type="radio" name="options" id="option1" autocomplete="off" checked> 활동회원순
+				    <input type="radio" name="options" value="1" autocomplete="off" checked> 활동회원순
 				  </label>
 				  <label class="btn btn-primary">
-				    <input type="radio" name="options" id="option2" autocomplete="off"> 이름순
+				    <input type="radio" name="options" value="2" autocomplete="off"> 이름순
 				  </label>
 				  <label class="btn btn-primary">
-				    <input type="radio" name="options" id="option3" autocomplete="off"> 게시글 작성순
+				    <input type="radio" name="options" value="3" autocomplete="off"> 게시글 작성순
 				  </label>
 				</div>
-				<button type="button" class="btn btn-default btn-lg">
+				<button type="button" class="btn btn-default btn-lg"id="refresh">
 				  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
 				</button>
 				<div id ="show_list"></div>
@@ -63,6 +63,9 @@ $(document).ready(function(){
 $.ajax('/read_subject',{
 	type:'get',
 	dataType: 'html',
+	data:{
+		val : 2
+	},
 	success:function(html){
 		$('#show_list').append(html);
 		},
@@ -71,5 +74,26 @@ $.ajax('/read_subject',{
 
 	});
 })
+$(document).on('click','#refresh',function(){
+	 var val = $('input[name="options"]:checked').val();
+	$.ajax('/read_subject',{
+		type:'get',
+		dataType:'html',
+		data:{
+			val : val
+			},
+		success:function(html){
+			$('#show_list').empty();
+			$('#show_list').append(html);
+			},
+		error:function(request,status,error){
 
+		}
+
+		})
+
+
+
+	
+})
 </script>

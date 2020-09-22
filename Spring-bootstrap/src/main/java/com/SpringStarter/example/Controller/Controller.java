@@ -1,9 +1,9 @@
 package com.SpringStarter.example.Controller;
 
 
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +34,7 @@ public class Controller {
 	@Autowired ObjectMapper objectmapper;
 	@Autowired SubjectService subjectservice;
 	@Autowired BoardService boardservice;
+	@Autowired NoteService noteservice;
 	@RequestMapping("/")
 	public String main() {
 
@@ -76,8 +77,9 @@ public class Controller {
 		return "/admin";
 	}
 	@RequestMapping("/read_subject")
-	public String read_subejct(Model model) {
-		List<Subject> list = subjectservice.readSubject(0);
+	public String read_subejct(@RequestParam("val") int value,Model model) {
+		
+		List<Subject> list = subjectservice.readSubject(value);
 		model.addAttribute("list", list);
 		return "/subjectlist";
 	}
@@ -89,14 +91,14 @@ public class Controller {
 	@RequestMapping("/selectsubjectshow")
 	public String readsubjectboard(Subject subject, Model model) {
 		String subjectname = subject.getSubjectname();
-		int maxpage = boardservice.maxpage(subjectname);
-		subject.setMaxpage(maxpage);
-		if(subject.getCurrentpage() == 0) {
-			subject.setCurrentpage(0);
+		subject.setmaxpage(boardservice.maxpage(subjectname));
+		if(subject.getcurrentpage() ==0) {
+			subject.setcurrentpage(1);
 		}
-		List<Board> list = boardservice.readBoard(subjectname);
+		List<Board> list = boardservice.readBoard(subject);
 		model.addAttribute("list",list);
 		model.addAttribute("subjectname",subjectname);
+		model.addAttribute("maxpage",subject.getmaxpage());
 		return "/boardshow";
 	}
 	@RequestMapping("/boardcreating")
@@ -138,6 +140,24 @@ public class Controller {
 		board =boardservice.readoneBoard(board.getIdboard());
 		String a = objectmapper.writeValueAsString(board);
 		return a;
+	}
+	@RequestMapping("/mydata")
+	public String mydata() {
+		
+		return "/mydata";
+	}
+	@RequestMapping("/shownote")
+	public String shownote() {
+		return "/shownote";
+	}
+	@RequestMapping("/check_id")
+	@ResponseBody
+	public String checkid(@RequestParam("id")String id) throws JsonProcessingException {
+		Note note = new Note();
+		int idreceiver  = noteservice.checkreceiver(id);
+		note.setIdreceiver(idreceiver);
+		String s = objectmapper.writeValueAsString(note);
+		return s;
 	}
 	
 	

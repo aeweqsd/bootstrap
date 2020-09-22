@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.SpringStarter.example.mapper.NoteMapper">
+<select id="checkreceiver" parameterType="String" resultType="int">
+select IFNULL(usernumber,count(*))
+from user
+where username = #{username}
+</select>
+<insert id="createnote" parameterType="Note">
+ insert into note(
+ 	idsender,
+ 	idreceiver,
+ 	content
+ ) values(
+ 	#{idsender},
+ 	#{idreceiver},
+ 	#{content}
+ )
+
+</insert>
+<select id="readnotelist" parameterType="Note" resultType="Note">
+select *
+from note
+where idreceiver = #{idreceiver};
+</select>
+<select id="readnote" parameterType="Note" resultType="Note">
+select *
+from note
+where idnote = #{idnote};
+</select>
+<delete id= "deletenote" parameterType="Note">
+delete from note
+where idnote = #{idnote};
+</delete>
+</mapper>

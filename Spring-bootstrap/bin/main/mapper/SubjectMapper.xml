@@ -4,7 +4,18 @@
 
 <select id="readSubject" parameterType="int" resultType="Subject">
 	select *
-	from subject;
+	from subject
+	<choose>
+		<when test="num ==1">
+		order by subjectmembercount desc
+		</when>
+		<when test="num ==2">
+		order by subjectname
+		</when>
+		<when test="num ==3">
+		order by subjectboardcount desc
+		</when>
+	</choose>
 </select>
 
 

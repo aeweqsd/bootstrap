@@ -2,6 +2,7 @@
     pageEncoding="utf-8"%>
 <%@ include file="link.jsp" %>
 <script src="/static/Setting2.js"></script>
+
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
@@ -23,12 +24,12 @@
 					</sec:authorize>
 					<sec:authorize access="isAuthenticated()">
 					<li><a href="/logout">로그아웃</a></li>
-					<li><a href="#" id="show_Register">내정보보기</a></li>
+					<li><a href="/mydata">내정보보기</a></li>
+					<li><a href="#" id="show_Note">쪽지보기<span class="badge">42</span></a></li>
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
 					<li><a href="#" id="show_admin">관리자 도구</a></li>
 					</sec:authorize>
-					
 				</ul>
 			</div>
 		</div>
@@ -70,7 +71,9 @@ $('#show_login').on('click',function(){
 $(document).on('click', '#show_admin', function () {
 	window.open("admin","Register","width=800,height=700 location=yes");
 });
-
+$(document).on('click','#show_Note',function(){
+	window.open("shownote", "note","width=800,height=700 location=yes");
+})
 
 
 </script>

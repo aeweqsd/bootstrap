@@ -21,7 +21,7 @@ spring:
       suffix: ".jsp"
     static-path-pattern: "/static/**"
   profiles:
-  - local
+  - local  task:    scheduling:      pool:        size: 8
 server:
   port: 8080
   tomcat:

@@ -4,6 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" 
     pageEncoding="utf-8"%>
 <c:set var="subjectname" value="${subjectname}"/>
+<c:set var="maxpage" value="${maxpage}"/>
 <sec:authentication var="user" property="principal" />  
 <c:set var="username" value="${user.username}"/>
 <c:set var="usernumber" value="${user.usernumber}"/>
@@ -34,20 +35,15 @@
 								      <a href="#" aria-label="Previous">
 								        <span aria-hidden="true">&laquo;</span>
 								      </a>
-										    </li>
-										    <li><a href="#">1</a></li>
-										    <li><a href="#">2</a></li>
-										    <li><a href="#">3</a></li>
-										    <li><a href="#">4</a></li>
-										    <li><a href="#">5</a></li>
-										    <li>
+										  <c:forEach var ="i" begin ="1" end="${maxpage}">
+										  <li><a href="/selectsubjectshow?subjectname=${subjectname}&currentpage=${i}"><c:out value="${i}"/></a>
+										  </c:forEach>
 								      <a href="#" aria-label="Next">
 								        <span aria-hidden="true">&raquo;</span>
 								      </a>
 								 </li>
 						    </ul>
 						</nav>
-						<c:out value ="${user}"/>
 				    <button type="button"id="makeboard" class="btn btn-primary"data-toggle="modal" data-target="#makingboardmodal" data-whatever="${subjectname}">글 생성</button>
 				</div>
 			</div>
@@ -134,6 +130,7 @@
 <script>
 var user = '<c:out value ="${username}"/>';
 var usernumber= '<c:out value ="${usernumber}"/>';
+var subjectname = '<c:out value ="${subjectname}"/>';
 $('#makingboardmodal').on('show.bs.modal', function (event) {
 	  var button = $(event.relatedTarget) // Button that triggered the modal
 	  var recipient = button.data('whatever') // Extract info from data-* attributes

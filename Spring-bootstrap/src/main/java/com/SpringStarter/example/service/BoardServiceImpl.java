@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.SpringStarter.example.Domain.Board;
+import com.SpringStarter.example.Domain.Subject;
 import com.SpringStarter.example.Domain.Thumbs_up;
 import com.SpringStarter.example.mapper.BoardMapper;
 import com.SpringStarter.example.mapper.SubjectMapper;
@@ -18,9 +19,9 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired ThumbMapper thumbmapper;
 	@Autowired SubjectMapper subjectmapper;
 	@Override
-	public List<Board> readBoard(String subjectname) {
-		subjectmapper.updatesubjectmembercount(subjectname);
-		return boardmapper.readBoard(subjectname);
+	public List<Board> readBoard(Subject subject) {
+		subjectmapper.updatesubjectmembercount(subject.getSubjectname());
+		return boardmapper.readBoard(subject);
 	}
 	@Override
 	public void createBoard(Board board) {
@@ -36,6 +37,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 	@Override
 	public Board readoneBoard(int idboard) {
+		boardmapper.refreshhit(idboard);
 		return boardmapper.readoneBoard(idboard);
 	}
 	@Override
@@ -55,7 +57,12 @@ public class BoardServiceImpl implements BoardService{
 	}
 	@Override
 	public int maxpage(String subjectname) {
-		return boardmapper.maxpage(subjectname);
+		Integer maxnum =boardmapper.maxpage(subjectname);
+		if(maxnum ==null) {
+			return 0;
+		}
+		maxnum =maxnum/10+1;
+		return maxnum;
 	}
 
 }

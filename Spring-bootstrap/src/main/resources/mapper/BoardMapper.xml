@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.SpringStarter.example.mapper.BoardMapper">
-<select id="readBoard" parameterType="String" resultType="Board">
-	select *
-	from board
-	where boardsubject =#{subjectname}
+<select id="readBoard" parameterType="Subject" resultType="Board">
+select *
+from(
+		select a.*, @rownum:=@rownum+1 as rnum
+		from board as a,(select @rownum:=0)as b
+		where boardsubject = #{subjectname} 
+		order by datetime
+)as c
+where c.rnum between (#{currentpage}-1)*10+1 and #{currentpage}*10
 </select>
 <insert id="createBoard" parameterType="Board">
 	insert into board(
@@ -55,13 +60,16 @@
 	where Idboard =#{Idboard};
 
 </update>
+
 <select id="maxpage" parameterType="String" resultType="int">
-select MAX(currentpage) as maxpage
-from(
-select b.*,FLOOR(@rownum:=@rownum+1/10)+1 as currentpage
-from board b
-where (@rownum:=0)=0 and b.boardsubject = #{subjectname}
-order by datetime desc
-)as a
+select count(*)
+from board
+where boardsubject = #{subjectname};
 </select>
+<update id="refreshhit" parameterType="int">
+	update board
+	set hit = hit+1
+	where Idboard = #{Idboard};	
+</update>
+
 </mapper>

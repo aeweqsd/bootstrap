@@ -8,16 +8,16 @@ public class Subject {
 	private int subjectboardcount;
 	private int currentpage;
 	private int maxpage;
-	public int getCurrentpage() {
+	public int getcurrentpage() {
 		return currentpage;
 	}
-	public void setCurrentpage(int currentpage) {
+	public void setcurrentpage(int currentpage) {
 		this.currentpage = currentpage;
 	}
-	public int getMaxpage() {
+	public int getmaxpage() {
 		return maxpage;
 	}
-	public void setMaxpage(int maxpage) {
+	public void setmaxpage(int maxpage) {
 		this.maxpage = maxpage;
 	}
 	public int getSubjectboardcount() {

@@ -3,10 +3,11 @@ package com.SpringStarter.example.service;
 import java.util.List;
 
 import com.SpringStarter.example.Domain.Board;
+import com.SpringStarter.example.Domain.Subject;
 import com.SpringStarter.example.Domain.Thumbs_up;
 
 public interface BoardService {
-	public List<Board> readBoard(String subjectname);
+	public List<Board> readBoard(Subject subject);
 	public void createBoard(Board board);
 	public void deleteBoard(int id);
 	public Board readoneBoard(int idboard);
