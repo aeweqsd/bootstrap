@@ -13,4 +13,5 @@ public interface UserMapper {
 	public void createUser(User user);
 	public List<GrantedAuthority> readAuthorities(String username);
 	public void createAuthority(User user);
+	public int readnote(int userid);
 }

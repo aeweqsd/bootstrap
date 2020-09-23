@@ -9,5 +9,6 @@ public interface NoteService {
 	public List<Note> readnotelist(Note note);
 	public void deletenote(Note note);
 	public int checkreceiver(String id);
+	
 
 }

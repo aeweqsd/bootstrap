@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" 
     pageEncoding="utf-8"%>
 <%@include file= "header.jsp" %>
-
+	<c:set var="user" value="${user}"/>
 
 	<div class ="container" role="main">
 	<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">

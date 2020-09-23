@@ -12,4 +12,5 @@ public interface UserService extends UserDetailsService {
 	public void createUser(User user);
 	public void createAuthorities(User user);
 	Collection<GrantedAuthority> getAuthorities(String username);
+	public int readnote(int userid);
 }

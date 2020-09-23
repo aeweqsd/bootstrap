@@ -5,10 +5,10 @@
  <div class="container-fluid">
  	<div class="row">
  		<div class="col-sm-12">
- 		
+ 		<div id="show"></div>
  		
  		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#makingnotemodal">쪽지쓰기</button>
- 		<button type="button" class="btn btn-danger">쪽지삭제</button>
+ 		<button type="button" id="notedelete" class="btn btn-danger" disabled="disabled">쪽지삭제</button>
  		</div>
  	</div>
  </div>
@@ -45,7 +45,25 @@
  </div>
  </body>
  <script>
-var usernumber= '<c:out value ="${user.usernumber}"/>';
+ var usernumber= '<c:out value ="${usernumber}"/>';
+$(document).ready(function(){
+	$.ajax('/readnote',{
+		type:'post',
+		dataType:'html',
+		data:{
+			usernumber : usernumber
+		},
+		success:function(html){
+			$('#show').append(html);
+		},
+		error:function(){
+		}
+
+		});
+
+	
+})
+
 $(document).on('keyup','#receiver',function(){
 	var id = $(this).val()
 	if(id.length <3){
@@ -83,12 +101,29 @@ $(document).on('keyup','#receiver',function(){
 	
 })
 $(document).on('click','#sendmessage',function(){
-	alert();
 	var idreceiver = $(this).attr('value');
 	var content = $('#content').val();
-	console.log(content);
-	console.log(usernumber);
+	$.ajax('/sendmessage',{
+		type:'post',
+		dataType:'json',
+		data :{
+			idsender : usernumber,
+			idreceiver : idreceiver,
+			content : content
+		},
+		success:function(json){
+			$('#status').empty();
+			$('#status').append('<div class="alert alert-warning role="alert"><strong>메세지를 성공적으로 보냈습니다.</strong></div>');
+			$('#receiver').val('');
+			$('#content').val('');
+		},
+		error:function(request,status,error){
 
+		}
+
+
+
+		});
 	
 })
 

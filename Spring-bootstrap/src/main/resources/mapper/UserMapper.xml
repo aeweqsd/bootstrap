@@ -56,6 +56,10 @@
 	 	userid = #{username};
 	 	
 	</insert>
-	
-	
+<select id="readnote" parameterType="int" resultType="int">
+select count(*)
+from note
+where idreceiver =#{userid};
+
+</select>
 </mapper>

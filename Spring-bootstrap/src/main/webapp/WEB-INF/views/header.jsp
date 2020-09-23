@@ -2,7 +2,7 @@
     pageEncoding="utf-8"%>
 <%@ include file="link.jsp" %>
 <script src="/static/Setting2.js"></script>
-
+<c:set var="user" value="${user}"/>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
@@ -25,7 +25,7 @@
 					<sec:authorize access="isAuthenticated()">
 					<li><a href="/logout">로그아웃</a></li>
 					<li><a href="/mydata">내정보보기</a></li>
-					<li><a href="#" id="show_Note">쪽지보기<span class="badge">42</span></a></li>
+					<li><a href="#" id="show_Note">쪽지보기</a></li>
 					</sec:authorize>
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
 					<li><a href="#" id="show_admin">관리자 도구</a></li>

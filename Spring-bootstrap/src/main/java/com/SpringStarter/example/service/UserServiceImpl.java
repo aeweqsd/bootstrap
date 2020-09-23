@@ -49,4 +49,9 @@ public class UserServiceImpl implements UserService {
 		return authorities;
 	}
 
+	@Override
+	public int readnote(int userid) {
+		return usermapper.readnote(userid);
+	}
+
 }

@@ -2,13 +2,17 @@ package com.SpringStarter.example.Controller;
 
 
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
@@ -16,12 +20,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.SpringStarter.example.Domain.*;
 import com.SpringStarter.example.service.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 
 
@@ -147,7 +153,10 @@ public class Controller {
 		return "/mydata";
 	}
 	@RequestMapping("/shownote")
-	public String shownote() {
+	public String shownote(Principal principal,Model model) {
+		User user = new User();
+		user = (User)((Authentication) principal).getPrincipal();
+		model.addAttribute("usernumber", user.getUsernumber());
 		return "/shownote";
 	}
 	@RequestMapping("/check_id")
@@ -159,6 +168,27 @@ public class Controller {
 		String s = objectmapper.writeValueAsString(note);
 		return s;
 	}
-	
+	@RequestMapping("/sendmessage")
+	@ResponseBody
+	public String sendmessage(Note note) throws JsonProcessingException {
+		noteservice.createnote(note);
+		String s= objectmapper.writeValueAsString(note);
+		return s;
+	}
+	@RequestMapping("/readnote")
+	public String readnote(@RequestParam("usernumber") int usernumber,Model model) {
+		Note note = new Note();
+		note.setIdreceiver(usernumber);
+		List<Note> list = noteservice.readnotelist(note);
+		model.addAttribute("list", list);
+		return "/notelist";
+	}
+	@RequestMapping("/deletenote")
+	@ResponseStatus(value = HttpStatus.OK)
+	public String deletenote(@RequestParam("arr") String arr ) {
+		ArrayList<object> a  = objectmapper.readValue(arr, ArrayList.class);
+		System.out.print(a);
+		return "/";
+	}
 	
 }

@@ -20,8 +20,8 @@ public class NoteServiceImpl implements NoteService{
 
 	@Override
 	public List<Note> readnotelist(Note note) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Note> list = notemapper.readnotelist(note);
+		return list;
 	}
 
 	@Override

@@ -2,11 +2,12 @@ package com.SpringStarter.example.Domain;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
-@SuppressWarnings("serial")
-public class User implements UserDetails{
+public class User implements UserDetails, Serializable{
+	private static final long serialVersionUID =  8500812273634164777L; 
 	private int usernumber; //회원번호
 	private String username; //유저id
 	private String password; //비밀번호
@@ -17,6 +18,14 @@ public class User implements UserDetails{
 	private boolean isAccountNonLocked;
 	private boolean isCredentialsNonExpired;
 	private boolean isEnabled;
+	private int notecount;
+	public int getNotecount() {
+		return notecount;
+	}
+
+	public void setNotecount(int notecount) {
+		this.notecount = notecount;
+	}
 	public int getUsernumber() {
 		return usernumber;
 	}

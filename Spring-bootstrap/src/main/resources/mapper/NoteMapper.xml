@@ -32,4 +32,7 @@ where idnote = #{idnote};
 delete from note
 where idnote = #{idnote};
 </delete>
+
+
+
 </mapper>
