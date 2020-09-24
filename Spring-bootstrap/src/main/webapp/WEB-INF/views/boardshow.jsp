@@ -29,6 +29,22 @@
 			</c:forEach>
 			</div>		
 				<div class="col-sm-12">
+					<form id="search-box" >
+						<input type="hidden" id="eee" value="board">
+							<div class="col-sm-2">
+								<select class="form-control" id="q">
+								<option>아이디</option>
+								<option>제목</option>
+								<option>내용</option>
+								</select>								
+							</div>
+							<div class="col-sm-8">
+								<input type="text" id="w" class="form-control " placeholder="">
+							</div>
+							<div class="col-sm-2">
+								<button type="button" value="${subjectname}" id="search" class="btn btn-default">검색</button>
+							</div>
+					</form>
 						<nav>
 							<ul class="pagination">
 								<li>
@@ -307,7 +323,13 @@ $(document).on('click','#boardmodified',function(){
 		error:function(request,status,error){
 		}
 		
-	});
+	});	
+})
+$(document).on('click','#search',function(){
+	console.log($('#eee').val())  //from ->
+	console.log($('#q').val()) // 컬럼 id content name
+	console.log($('#w').val()) // 검색 ->like ?
+	console.log($(this).attr('value')) //from ->subjectname
 
 	
 })

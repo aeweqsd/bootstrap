@@ -61,14 +61,27 @@ $(document).on('change','.checkbox',function(){
 	console.log(JSON.stringify([...select]));	
 })
 $(document).on('click','#notedelete',function(){
-	var arr =JSON.stringify([...select]);
-	console.log();
+	var arr1= [];
+	var arr = [...select];
+	for(let pp of arr){
+		var noteinfo = new Object();
+		console.log(pp);
+		noteinfo.idnote = pp;
+		noteinfo.idsender = 0;
+		noteinfo.idreceiver = 0;
+		noteinfo.content = "";
+		noteinfo.is_read  = false;
+		arr1.push(noteinfo);
+	}
+	var arr =JSON.stringify([...arr1]);
+	console.log(arr);
+	
 	$.ajax('/deletenote',{
-		type:'delete',
+		type:'post',
 		dataType:'html',
-		data:{
-			arr : arr
-		},
+		contentType: 'application/json',
+		data:JSON.stringify([...arr1]),
+		
 		success:function(){
 
 		},

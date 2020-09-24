@@ -30,7 +30,10 @@ where idnote = #{idnote};
 </select>
 <delete id= "deletenote" parameterType="Note">
 delete from note
-where idnote = #{idnote};
+where idnote in 
+<foreach collection="list" item="item" open ="(" close = ")" separator=",">
+#{item.idnote}
+</foreach>
 </delete>
 
 

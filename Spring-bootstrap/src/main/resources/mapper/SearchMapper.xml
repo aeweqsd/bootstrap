@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.SpringStarter.example.mapper.SearchMapper">
+<select id="boardsearch" resultType="Board">
+select *
+from board
+where ${} = ${} and
+	  ${} like ${};
+</select>
+
+<select id="Usersearch" resultType="User">
+select *
+from user
+where ${} like ${};
+</select>
+
+<select id="Subjectsearch" resultType="Subject">
+select *
+from subject
+where subjectname like ${};
+</select>
+	
+</mapper>

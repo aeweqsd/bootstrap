@@ -25,7 +25,7 @@ public class NoteServiceImpl implements NoteService{
 	}
 
 	@Override
-	public void deletenote(Note note) {
+	public void deletenote(List<Note> note) {
 		notemapper.deletenote(note);
 	}
 

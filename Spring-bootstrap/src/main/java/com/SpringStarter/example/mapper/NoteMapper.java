@@ -10,7 +10,7 @@ import com.SpringStarter.example.Domain.Note;
 public interface NoteMapper {
 	public void createnote(Note note);
 	public void readnote(Note note);
-	public void deletenote(Note note);
+	public void deletenote(List<Note> note);
 	public List<Note> readnotelist(Note note);
 	public int checkreceiver(String username);
 }

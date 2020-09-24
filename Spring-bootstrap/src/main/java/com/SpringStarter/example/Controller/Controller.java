@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -185,9 +186,8 @@ public class Controller {
 	}
 	@RequestMapping("/deletenote")
 	@ResponseStatus(value = HttpStatus.OK)
-	public String deletenote(@RequestParam("arr") String arr ) {
-		ArrayList<object> a  = objectmapper.readValue(arr, ArrayList.class);
-		System.out.print(a);
+	public String deletenote(@RequestBody List<Note> note) {
+		noteservice.deletenote(note);
 		return "/";
 	}
 	
