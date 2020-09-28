@@ -19,7 +19,8 @@
 	</c:forEach>
 	
 	</table>
-<div class="center-block">
+
+<!-- <div class="center-block">
 <nav><ul class="pagination">
 <li>
       <a href="#" aria-label="Previous">
@@ -38,6 +39,6 @@
     </li>
     </ul></nav>
 </div>
-
+ -->
 
 

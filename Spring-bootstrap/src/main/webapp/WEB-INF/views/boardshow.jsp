@@ -289,15 +289,20 @@ $(document).on('click','#boarddelete',function(){
 	var idboard = $(this).attr('value');
 	$.ajax('/deleteboard',{
 		type:'delete',
-		dataType:'html',
+		dataType:'json',
 		data:{
 			idboard : idboard
 		},
-		success:function(html){
+		success:function(json){
 			alert("글이 삭제 되었습니다.");
 		},
-		error:function(request,status,error){}
-
+		error:function(request,status,error){
+			console.log(request +' '+ status + ' ' + error);
+			console.log( request.status );
+			console.log( request.statusText );
+			console.log( request.responseText );
+			console.log( request.readyState );
+		}
 		});
 })
 $(document).on('click','#boardmodified',function(){

@@ -10,7 +10,7 @@
 		<th>내용</th>
 	</tr>
 	<c:forEach var="list" items="${list}">
-	<tr>
+	<tr id="${list.idnote}">
 		<td><label class="checkbox-inline">
   <input type="checkbox" class="checkbox" id="inlineCheckbox1" value="${list.idnote}">${list.idnote}
 </label></td>
@@ -65,7 +65,6 @@ $(document).on('click','#notedelete',function(){
 	var arr = [...select];
 	for(let pp of arr){
 		var noteinfo = new Object();
-		console.log(pp);
 		noteinfo.idnote = pp;
 		noteinfo.idsender = 0;
 		noteinfo.idreceiver = 0;
@@ -74,7 +73,6 @@ $(document).on('click','#notedelete',function(){
 		arr1.push(noteinfo);
 	}
 	var arr =JSON.stringify([...arr1]);
-	console.log(arr);
 	
 	$.ajax('/deletenote',{
 		type:'post',
@@ -83,7 +81,10 @@ $(document).on('click','#notedelete',function(){
 		data:JSON.stringify([...arr1]),
 		
 		success:function(){
-
+			for(let pp of arr1){
+				console.log(pp.idnote);
+				$('#pp.idnote').remove();
+				}
 		},
 		error:function(){
 
@@ -91,7 +92,6 @@ $(document).on('click','#notedelete',function(){
 
 
 		});
-
 	
 })
 

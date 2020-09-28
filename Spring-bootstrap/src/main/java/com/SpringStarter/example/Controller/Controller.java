@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -84,7 +85,7 @@ public class Controller {
 		return "/admin";
 	}
 	@RequestMapping("/read_subject")
-	public String read_subejct(@RequestParam("val") int value,Model model) {
+	public String read_subejct(@RequestParam(value ="val", defaultValue="1") int value,Model model) {
 		
 		List<Subject> list = subjectservice.readSubject(value);
 		model.addAttribute("list", list);
@@ -136,10 +137,12 @@ public class Controller {
 		boardservice.deletethumb(thumb);
 		return "/Success";
 	}
-	@RequestMapping("/deleteboard")
-	public String deleteboard(Board board) {
+	@DeleteMapping
+	@RequestMapping(value ="/deleteboard",method = RequestMethod.DELETE)
+	@ResponseBody
+	public String deleteboard(Board board) throws JsonProcessingException {
 		boardservice.deleteBoard(board.getIdboard());
-		return "/Success";
+		return objectmapper.writeValueAsString(board);
 	}
 	@RequestMapping("/boardmodified")
 	@ResponseBody
@@ -188,7 +191,7 @@ public class Controller {
 	@ResponseStatus(value = HttpStatus.OK)
 	public String deletenote(@RequestBody List<Note> note) {
 		noteservice.deletenote(note);
-		return "/";
+		return "/Success";
 	}
 	
 }
